@@ -8,3 +8,6 @@ You can get the latest version of the applications for docker here:
 - https://cloud.docker.com/repository/docker/inventivejon/simpledreamer_backend
 - https://cloud.docker.com/repository/docker/inventivejon/simpledreamer_sb_frontend
 - https://cloud.docker.com/repository/docker/inventivejon/simpledreamer_sb_backend
+
+You can get the latest code here:
+- https://github.com/inventivejon/SimpleDreamer
