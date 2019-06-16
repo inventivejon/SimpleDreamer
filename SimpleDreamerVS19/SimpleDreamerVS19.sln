@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend_To_Show_SimpleDreamerBackends", "Frontend_To_Show_SimpleDreamerBackends\Frontend_To_Show_SimpleDreamerBackends.csproj", "{85634153-07CD-4286-BA66-689CAE4306BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frontend_To_Show_SimpleDreamerBackends", "Frontend_To_Show_SimpleDreamerBackends\Frontend_To_Show_SimpleDreamerBackends.csproj", "{85634153-07CD-4286-BA66-689CAE4306BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend_To_Show_SimpleDreamerBackends", "Backend_To_Show_SimpleDreamerBackends\Backend_To_Show_SimpleDreamerBackends.csproj", "{A211EF75-73C0-4652-9C6F-19762C7A8489}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend_To_Show_SimpleDreamerBackends", "Backend_To_Show_SimpleDreamerBackends\Backend_To_Show_SimpleDreamerBackends.csproj", "{A211EF75-73C0-4652-9C6F-19762C7A8489}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDreamer_Backend", "SimpleDreamer_Backend\SimpleDreamer_Backend.csproj", "{9B7E2DC3-5525-4DF0-BA56-49EB971AE426}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWebsite", "TestWebsite\TestWebsite.csproj", "{244A9887-4DBC-4265-B992-8AF7677A3F31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{A211EF75-73C0-4652-9C6F-19762C7A8489}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A211EF75-73C0-4652-9C6F-19762C7A8489}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A211EF75-73C0-4652-9C6F-19762C7A8489}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B7E2DC3-5525-4DF0-BA56-49EB971AE426}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B7E2DC3-5525-4DF0-BA56-49EB971AE426}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B7E2DC3-5525-4DF0-BA56-49EB971AE426}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B7E2DC3-5525-4DF0-BA56-49EB971AE426}.Release|Any CPU.Build.0 = Release|Any CPU
+		{244A9887-4DBC-4265-B992-8AF7677A3F31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{244A9887-4DBC-4265-B992-8AF7677A3F31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{244A9887-4DBC-4265-B992-8AF7677A3F31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{244A9887-4DBC-4265-B992-8AF7677A3F31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
