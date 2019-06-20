@@ -2,7 +2,7 @@ version: "3.7"
 services:
   SimpleDreamer_SB_Backend:
     build: 
-      context: ./../../Backend_To_Show_SimpleDreamerBackends
+      context: ./../../SimpleDreamerVS19/Backend_To_Show_SimpleDreamerBackends
       dockerfile: Dockerfile
     image: simpledreamer_sb_backend:v0.1
     container_name: SimpleDreamer_SB_Backend
@@ -11,7 +11,7 @@ services:
 
   SimpleDreamer_SB_Frontend:
     build:
-      context: ./../../Frontend_To_Show_SimpleDreamerBackends
+      context: ./../../SimpleDreamerVS19/Frontend_To_Show_SimpleDreamerBackends
       dockerfile: Dockerfile
     image: simpledreamer_sb_frontend:v0.1
     container_name: SimpleDreamer_SB_Frontend
@@ -26,9 +26,9 @@ networks:
     name: Frontend_network_SimpleDreamer_SB
     # Use a custom driver
     driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.20.0/24
+   # ipam:
+   #   config:
+   #     - subnet: 192.168.20.0/24
   backend:
     name: Backend_network_SimpleDreamer_SB
     # Use a custom driver which takes special options
