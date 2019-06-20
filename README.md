@@ -11,3 +11,7 @@ You can get the latest version of the applications for docker here:
 
 You can get the latest code here:
 - https://github.com/inventivejon/SimpleDreamer
+
+Using Postman for API Testing:
+For testing on lapop: https://www.getpostman.com/
+For final automated testing on docker hub: https://hub.docker.com/r/postman/newman
