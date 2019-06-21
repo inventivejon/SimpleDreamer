@@ -11,3 +11,12 @@ You can get the latest version of the applications for docker here:
 
 You can get the latest code here:
 - https://github.com/inventivejon/SimpleDreamer
+
+All APIs that will be developed in the project use OpenAPI 3.0 language for description https://swagger.io/specification/
+
+Using OpenSwagger Editor to define APIs:
+https://github.com/swagger-api/swagger-editor/releases/tag/v3.6.30
+
+Using Postman for API Testing:
+For testing on lapop: https://www.getpostman.com/
+For final automated testing on docker hub: https://hub.docker.com/r/postman/newman
