@@ -22,4 +22,6 @@ RUN dotnet publish "Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server.cspr
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
+RUN cp -rf /app/wwwroot/_content/blazor_frontend_to_show_simpledreamer_api_serverclient/* /app/wwwroot/.
+RUN rm -frv /app/wwwroot/_content
 ENTRYPOINT ["dotnet", "Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server.dll"]
