@@ -1,0 +1,25 @@
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0.0-preview6 AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0.100-preview6 AS build
+WORKDIR /src
+# Copy csproj
+COPY ["Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Client/Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Client.csproj","Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Client/"]
+COPY ["Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server/Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server.csproj","Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server/"]
+COPY ["Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Shared/Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Shared.csproj","Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Shared/"]
+# Restore as distinct layers
+RUN dotnet restore "Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server/Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server.csproj"
+
+# Copy everything else and build
+COPY . .
+WORKDIR "/src/Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server"
+RUN dotnet build "Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server.csproj"  -c Release -o /app
+
+# Build runtime image
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server.dll"]
