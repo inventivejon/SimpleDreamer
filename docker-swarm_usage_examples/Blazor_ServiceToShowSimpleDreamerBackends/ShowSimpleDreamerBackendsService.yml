@@ -1,36 +1,8 @@
 version: "3.7"
 services:
-  SimpleDreamer_SB_Backend:
-   # build: 
-     # context: ./../../Backend_To_Show_SimpleDreamerBackends
-   #   dockerfile: Dockerfile
-    image: 127.0.0.1:5000/simpledreamer_sb_backend:v0.1
+  SimpleDreamer_SB_Blazor:
+    image: 127.0.0.1:5000/simpledreamer_sb_blazor:v0.1
     deploy:
       replicas: 1
-    container_name: SimpleDreamer_SB_Backend
-    networks:
-      - backend
-
-  SimpleDreamer_SB_Blazor_Frontend:
-   # build:
-   #   context: ./../../Frontend_To_Show_SimpleDreamerBackends
-   #   dockerfile: Dockerfile
-    image: 127.0.0.1:5000/simpledreamer_sb_blazor_frontend:v0.1
-    deploy:
-      replicas: 3
-    container_name: SimpleDreamer_SB_Blazor_Frontend
     ports:
       - "8000:80"
-    networks: 
-      - frontend
-      - backend
-
-networks:
-  frontend:
-    name: Blazor_Frontend_network_SimpleDreamer_SB
-    # Use a custom driver
-    driver: overlay
-  backend:
-    name: Backend_network_SimpleDreamer_SB
-    # Use a custom driver which takes special options
-    driver: overlay
