@@ -1,9 +1,14 @@
+using Blazor.FlexGrid;
+using Blazor.FlexGrid.DataSet;
+using Blazor.FlexGrid.DataSet.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
+using System.IO;
 using System.Linq;
 
 namespace Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server
@@ -20,6 +25,8 @@ namespace Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
             });
+            
+            services.AddSingleton<StaticRepositoryCollections>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +49,7 @@ namespace Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapFallbackToClientSideBlazor<Client.Startup>("index.html");
             });
+
         }
     }
 }
