@@ -1,8 +1,0 @@
-version: "3.7"
-services:
-  SimpleDreamer_SB_Blazor:
-    image: 127.0.0.1:5000/simpledreamer_sb_blazor:v0.1
-    deploy:
-      replicas: 1
-    ports:
-      - "8000:80"

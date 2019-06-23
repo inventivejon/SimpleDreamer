@@ -4,24 +4,24 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0.100-preview6 AS build
 WORKDIR /src
 # Copy csproj
-COPY ["Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Client/Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Client.csproj","Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Client/"]
-COPY ["Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server/Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server.csproj","Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server/"]
-COPY ["Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Shared/Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Shared.csproj","Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Shared/"]
+COPY ["Show_SimpleDreamer_API_Servers.Client/Show_SimpleDreamer_API_Servers.Client.csproj","Show_SimpleDreamer_API_Servers.Client/"]
+COPY ["Show_SimpleDreamer_API_Servers.Server/Show_SimpleDreamer_API_Servers.Server.csproj","Show_SimpleDreamer_API_Servers.Server/"]
+COPY ["Show_SimpleDreamer_API_Servers.Shared/Show_SimpleDreamer_API_Servers.Shared.csproj","Show_SimpleDreamer_API_Servers.Shared/"]
 # Restore as distinct layers
-RUN dotnet restore "Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server/Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server.csproj"
+RUN dotnet restore "Show_SimpleDreamer_API_Servers.Server/Show_SimpleDreamer_API_Servers.Server.csproj"
 
 # Copy everything else and build
 COPY . .
-WORKDIR "/src/Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server"
-RUN dotnet build "Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server.csproj" -c Release -o /app
+WORKDIR "/src/Show_SimpleDreamer_API_Servers.Server"
+RUN dotnet build "Show_SimpleDreamer_API_Servers.Server.csproj" -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server.csproj"  -c Release -o /app
+RUN dotnet publish "Show_SimpleDreamer_API_Servers.Server.csproj"  -c Release -o /app
 
 # Build runtime image
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-RUN cp -rf /app/wwwroot/_content/blazor_frontend_to_show_simpledreamer_api_serverclient/* /app/wwwroot/.
+RUN cp -rf /app/wwwroot/_content/Show_SimpleDreamer_API_Serversclient/* /app/wwwroot/.
 RUN rm -frv /app/wwwroot/_content
-ENTRYPOINT ["dotnet", "Blazor_Frontend_To_Show_SimpleDreamer_API_Server.Server.dll"]
+ENTRYPOINT ["dotnet", "Show_SimpleDreamer_API_Servers.Server.dll"]
