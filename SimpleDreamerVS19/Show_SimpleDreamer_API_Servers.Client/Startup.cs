@@ -15,6 +15,7 @@ namespace Show_SimpleDreamer_API_Servers.Client
                 {
                     cfg.ApplyConfiguration(new CustomerGridConfiguration());
                     cfg.ApplyConfiguration(new OrderGridConfiguration());
+                    cfg.ApplyConfiguration(new BasicBackendInformationGridConfiguration());
                 },
                 options =>
                 {

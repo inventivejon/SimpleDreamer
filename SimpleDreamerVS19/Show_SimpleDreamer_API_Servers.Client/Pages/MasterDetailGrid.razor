@@ -2,12 +2,17 @@
 @using Show_SimpleDreamer_API_Servers.Shared
 @using Blazor.FlexGrid.DataAdapters
 @using Blazor.FlexGrid.Components.Events
+@using System.Timers;
 @inject HttpClient Http
 @inject MasterTableDataAdapterBuilder<Customer> MasterAdapterBuilder
-@inject LazyLoadedTableDataAdapter<Order> ordersAdapter
+@* @inject LazyLoadedTableDataAdapter<Order> ordersAdapter *@
 @page "/masterdetailgrid"
 
 <h1>Customers</h1>
+
+<h1>@_counter</h1>
+
+<button class="btn btn-primary" @onclick="@IncrementCount">Click me</button>
 
 <GridView DataAdapter="@customersMasterDataAdapter"
           PageSize="5"
@@ -15,26 +20,73 @@
 </GridView>
 
 @code{
-    CollectionTableDataAdapter<Customer> customerDataAdapter;
-    CollectionTableDataAdapter<CustomerAddress> customerAddressesDataAdapter;
-    MasterTableDataAdapter<Customer> customersMasterDataAdapter;
+int _counter;
+Timer _timer;
 
-    protected override async Task OnInitAsync()
-    {
-        var customers = await Http.GetJsonAsync<Customer[]>("api/Customer/Customers");
-        var customersAddresses = await Http.GetJsonAsync<CustomerAddress[]>("api/Customer/CustomersAddresses");
+
+CollectionTableDataAdapter<Customer> customerDataAdapter;
+//CollectionTableDataAdapter<CustomerAddress> customerAddressesDataAdapter;
+MasterTableDataAdapter<Customer> customersMasterDataAdapter;
+List<Customer> allCustomers;
+
+protected override async Task OnInitAsync()
+{
+    int value = await UpdateCompleteTable();
+
+    _timer = new System.Timers.Timer(1000);
+    _timer.Elapsed += new ElapsedEventHandler(_timer_Elapsed);
+    _timer.Start();
+}
+
+public async Task<int> UpdateCompleteTable()
+{
+    var received = await Http.GetJsonAsync<Customer[]>("api/Customer/Customers");
+    allCustomers = received.ToList();
+    // var customersAddresses = await Http.GetJsonAsync<CustomerAddress[]>("api/Customer/CustomersAddresses");
+    customerDataAdapter = new CollectionTableDataAdapter<Customer>(allCustomers);
+    // customerAddressesDataAdapter = new CollectionTableDataAdapter<CustomerAddress>(customersAddresses);
+
+    customersMasterDataAdapter = MasterAdapterBuilder
+        .MasterTableDataAdapter(customerDataAdapter)
+        //.WithDetailTableDataAdapter(ordersAdapter)
+        //.WithDetailTableDataAdapter(customerAddressesDataAdapter)
+        .Build();
+
+
+    return _counter;
+}
+
+public void _timer_Elapsed(object sender, ElapsedEventArgs e)
+{
+    Console.WriteLine(DateTime.Now.ToString("{hh:mm:ss.fff}"));
+    _counter++;
+    //if (_counter >= 20)
+    //    _timer.Stop();
+
+    //var customers = new Customer[1];
+    //    customers[0].Address = "None";
+
+    //allCustomers.Clear();
+
+    /*
         customerDataAdapter = new CollectionTableDataAdapter<Customer>(customers);
-        customerAddressesDataAdapter = new CollectionTableDataAdapter<CustomerAddress>(customersAddresses);
-
         customersMasterDataAdapter = MasterAdapterBuilder
             .MasterTableDataAdapter(customerDataAdapter)
-            .WithDetailTableDataAdapter(ordersAdapter)
-            .WithDetailTableDataAdapter(customerAddressesDataAdapter)
+            //.WithDetailTableDataAdapter(ordersAdapter)
+            //.WithDetailTableDataAdapter(customerAddressesDataAdapter)
             .Build();
-    }
+            */
 
-    public void ItemSavedOperationFinished(SaveResultArgs saveResultArgs)
-    {
-        Console.WriteLine($"Item saved result: {saveResultArgs.ItemSucessfullySaved}");
-    }
+    base.StateHasChanged();
+}
+
+public void IncrementCount()
+{
+    _counter++;
+}
+
+public void ItemSavedOperationFinished(SaveResultArgs saveResultArgs)
+{
+    Console.WriteLine($"Item saved result: {saveResultArgs.ItemSucessfullySaved}");
+}
 }
