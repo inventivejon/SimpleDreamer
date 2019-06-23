@@ -22,6 +22,6 @@ RUN dotnet publish "Show_SimpleDreamer_API_Servers.Server.csproj"  -c Release -o
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-RUN cp -rf /app/wwwroot/_content/Show_SimpleDreamer_API_Serversclient/* /app/wwwroot/.
+RUN cp -rf /app/wwwroot/_content/show_simpledreamer_api_serversclient/* /app/wwwroot/.
 RUN rm -frv /app/wwwroot/_content
 ENTRYPOINT ["dotnet", "Show_SimpleDreamer_API_Servers.Server.dll"]

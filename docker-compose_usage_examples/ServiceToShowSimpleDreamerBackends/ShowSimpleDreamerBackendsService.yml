@@ -7,4 +7,4 @@ services:
     image: simpledreamer_sb_blazor:v0.1
     container_name: SimpleDreamer_SB_Blazor
     ports:
-      - "8000:80
+      - "8000:80"
