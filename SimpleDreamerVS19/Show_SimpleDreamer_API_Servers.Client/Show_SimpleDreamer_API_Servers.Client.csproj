@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazor.FlexGrid" Version="0.8.3" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.0.0-preview6.19307.2" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.0.0-preview6.19307.2" PrivateAssets="all" />
   </ItemGroup>
@@ -18,6 +17,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\Blazor.FlexGrid\Blazor.FlexGrid.csproj" />
     <ProjectReference Include="..\Show_SimpleDreamer_API_Servers.Shared\Show_SimpleDreamer_API_Servers.Shared.csproj" />
   </ItemGroup>
 

@@ -9,6 +9,16 @@ namespace Show_SimpleDreamer_API_Servers.Client.GridConfigurations
         public void Configure(EntityTypeBuilder<BasicBackendInformation> builder)
         {
             builder.IsMasterTable();
+
+            /*
+            IpAddress = "192.168.10.65",
+            Port = "80" + index.ToString("{XX}"),
+            Name = "Default server",
+            Description = "Default server description",
+            Tags = "RandomPics",
+            Country = "Germany"
+             */
+
             /*
             builder.HasDetailRelationship<Order>(c => c.Id, o => o.CustomerId)
                .HasLazyLoadingUrl("api/Order/Orders")

@@ -4,7 +4,7 @@
 @using Blazor.FlexGrid.Components.Events
 @using System.Timers;
 @inject HttpClient Http
-@inject MasterTableDataAdapterBuilder<Customer> MasterAdapterBuilder
+@inject MasterTableDataAdapterBuilder<BasicBackendInformation> MasterAdapterBuilder
 @* @inject LazyLoadedTableDataAdapter<Order> ordersAdapter *@
 @page "/masterdetailgrid"
 
@@ -24,10 +24,10 @@ int _counter;
 Timer _timer;
 
 
-CollectionTableDataAdapter<Customer> customerDataAdapter;
+CollectionTableDataAdapter<BasicBackendInformation> customerDataAdapter;
 //CollectionTableDataAdapter<CustomerAddress> customerAddressesDataAdapter;
-MasterTableDataAdapter<Customer> customersMasterDataAdapter;
-List<Customer> allCustomers;
+MasterTableDataAdapter<BasicBackendInformation> customersMasterDataAdapter;
+List<BasicBackendInformation> allCustomers;
 
 protected override async Task OnInitAsync()
 {
@@ -40,10 +40,10 @@ protected override async Task OnInitAsync()
 
 public async Task<int> UpdateCompleteTable()
 {
-    var received = await Http.GetJsonAsync<Customer[]>("api/Customer/Customers");
+    var received = await Http.GetJsonAsync<BasicBackendInformation[]>("api/BasicBackendInformation/BasicBackendInformation");
     allCustomers = received.ToList();
     // var customersAddresses = await Http.GetJsonAsync<CustomerAddress[]>("api/Customer/CustomersAddresses");
-    customerDataAdapter = new CollectionTableDataAdapter<Customer>(allCustomers);
+    customerDataAdapter = new CollectionTableDataAdapter<BasicBackendInformation>(allCustomers);
     // customerAddressesDataAdapter = new CollectionTableDataAdapter<CustomerAddress>(customersAddresses);
 
     customersMasterDataAdapter = MasterAdapterBuilder

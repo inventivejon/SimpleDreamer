@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Show_SimpleDreamer_API_Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Show_SimpleDreamer_API_Servers.Shared", "Show_SimpleDreamer_API_Servers.Shared\Show_SimpleDreamer_API_Servers.Shared.csproj", "{3D4156C4-4C6D-401B-BB91-066ED43235B9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.FlexGrid", "Blazor.FlexGrid\Blazor.FlexGrid.csproj", "{5F07D01F-0DE5-43E5-BF72-F888C14524E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{3D4156C4-4C6D-401B-BB91-066ED43235B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D4156C4-4C6D-401B-BB91-066ED43235B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D4156C4-4C6D-401B-BB91-066ED43235B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F07D01F-0DE5-43E5-BF72-F888C14524E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F07D01F-0DE5-43E5-BF72-F888C14524E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F07D01F-0DE5-43E5-BF72-F888C14524E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F07D01F-0DE5-43E5-BF72-F888C14524E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
