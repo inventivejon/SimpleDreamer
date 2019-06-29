@@ -23,6 +23,8 @@ namespace Show_SimpleDreamer_API_Servers.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddNewtonsoftJson();
+            // Register the Swagger services
+            services.AddSwaggerDocument();
             services.AddServerSideBlazor();
             services.AddResponseCompression(opts =>
             {
@@ -61,6 +63,10 @@ namespace Show_SimpleDreamer_API_Servers.Server
             app.UseClientSideBlazorFiles<Client.Startup>();
 
             app.UseRouting();
+
+            // Register the Swagger generator and the Swagger UI middlewares
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseEndpoints(endpoints =>
             {
