@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Blazor.FlexGrid\Blazor.FlexGrid.csproj" />
     <ProjectReference Include="..\Show_SimpleDreamer_API_Servers.Client\Show_SimpleDreamer_API_Servers.Client.csproj" />
     <ProjectReference Include="..\Show_SimpleDreamer_API_Servers.Shared\Show_SimpleDreamer_API_Servers.Shared.csproj" />
   </ItemGroup>
