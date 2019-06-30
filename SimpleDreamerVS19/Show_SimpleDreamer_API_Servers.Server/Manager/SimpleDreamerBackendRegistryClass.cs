@@ -37,7 +37,7 @@ namespace Show_SimpleDreamer_API_Servers.Server.Manager
         public ExtendedBackendInformation(BasicBackendInformation basic)
         {
             Basic = basic;
-            
+            PingStats = new PingStatsClass();
         }
 
         public void Ping()
