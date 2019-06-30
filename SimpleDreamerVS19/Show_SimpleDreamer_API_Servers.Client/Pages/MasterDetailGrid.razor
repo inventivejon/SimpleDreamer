@@ -9,7 +9,7 @@
 
 <h1>Customers</h1>
 
-<h1>@_counter</h1>
+<h1>@_LastUpdatedInformation</h1>
 
 <button class="btn btn-primary" @onclick="@IncrementCount">Click me</button>
 
@@ -19,10 +19,8 @@
 </GridView>
 
 @code{
-int _counter;
+string _LastUpdatedInformation;
 Timer _timer;
-
-public event Action OnExpenseAdded;
 
 IEqualityComparer<BasicBackendInformation> tableEntryComparer;
 
@@ -32,9 +30,9 @@ List<BasicBackendInformation> allCustomers;
 
 protected override async Task OnInitAsync()
 {
-    int value = await UpdateCompleteTable();
+    await UpdateCompleteTable();
 
-    _timer = new System.Timers.Timer(1000);
+    _timer = new System.Timers.Timer(10000);
     _timer.Elapsed += new ElapsedEventHandler(_timer_Elapsed);
     _timer.Start();
 
@@ -44,7 +42,7 @@ protected override async Task OnInitAsync()
         (a, b) => 0 == string.Compare((a.IpAddress + ":" + a.Port),(b.IpAddress + ":" + b.Port)));
 }
 
-public async Task<int> UpdateCompleteTable()
+public async Task UpdateCompleteTable()
 {
     var received = await Http.GetJsonAsync<BasicBackendInformation[]>("api/BasicBackendInformation/BasicBackendInformationTest");
     allCustomers = received.ToList();
@@ -53,8 +51,6 @@ public async Task<int> UpdateCompleteTable()
     customersMasterDataAdapter = MasterAdapterBuilder
         .MasterTableDataAdapter(customerDataAdapter)
         .Build();
-
-    return _counter;
 }
 
 protected async void _timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -66,16 +62,33 @@ protected async void _timer_Elapsed(object sender, ElapsedEventArgs e)
 
 protected async Task IncrementCount()
 {
-    _counter++;
+    _LastUpdatedInformation = "Last time update: " + DateTime.Now.ToString();
 
     var received = await Http.GetJsonAsync<BasicBackendInformation[]>("api/BasicBackendInformation/BasicBackendInformationTest");
-    
+
+    /* Add new entries */
     foreach (BasicBackendInformation singleBackendInformation in received.ToList())
     {
         if(!allCustomers.Contains(singleBackendInformation, tableEntryComparer))
         {
             allCustomers.Add(singleBackendInformation);
         }
+    }
+
+    /* Remove vanished entries */
+    List<BasicBackendInformation> toDelete = new List<BasicBackendInformation>();
+
+    foreach(BasicBackendInformation singleBackendInformation in allCustomers)
+    {
+        if(!received.Contains(singleBackendInformation, tableEntryComparer))
+        {
+            toDelete.Add(singleBackendInformation);
+        }
+    }
+
+    foreach(BasicBackendInformation singleBackendInformation in toDelete)
+    {
+        allCustomers.Remove(singleBackendInformation);
     }
 }
 }
