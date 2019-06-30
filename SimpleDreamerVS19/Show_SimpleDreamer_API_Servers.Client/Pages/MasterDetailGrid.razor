@@ -5,7 +5,6 @@
 @using System.Timers;
 @inject HttpClient Http
 @inject MasterTableDataAdapterBuilder<BasicBackendInformation> MasterAdapterBuilder
-@* @inject LazyLoadedTableDataAdapter<Order> ordersAdapter *@
 @page "/masterdetailgrid"
 
 <h1>Customers</h1>
@@ -13,6 +12,8 @@
 <h1>@_counter</h1>
 
 <button class="btn btn-primary" @onclick="@IncrementCount">Click me</button>
+
+<input type="time" />
 
 <GridView DataAdapter="@customersMasterDataAdapter">
 </GridView>
@@ -23,6 +24,8 @@ Timer _timer;
 
 public event Action OnExpenseAdded;
 
+IEqualityComparer<BasicBackendInformation> tableEntryComparer;
+
 CollectionTableDataAdapter<BasicBackendInformation> customerDataAdapter;
 MasterTableDataAdapter<BasicBackendInformation> customersMasterDataAdapter;
 List<BasicBackendInformation> allCustomers;
@@ -31,11 +34,14 @@ protected override async Task OnInitAsync()
 {
     int value = await UpdateCompleteTable();
 
-    OnExpenseAdded += IncrementCount;
-
     _timer = new System.Timers.Timer(1000);
     _timer.Elapsed += new ElapsedEventHandler(_timer_Elapsed);
     _timer.Start();
+
+    // We're comparing based on the Id property
+    tableEntryComparer = EqualityComparerFactory.Create<BasicBackendInformation>(
+        a => a.IpAddress.GetHashCode(),
+        (a, b) => 0 == string.Compare((a.IpAddress + ":" + a.Port),(b.IpAddress + ":" + b.Port)));
 }
 
 public async Task<int> UpdateCompleteTable()
@@ -46,54 +52,30 @@ public async Task<int> UpdateCompleteTable()
 
     customersMasterDataAdapter = MasterAdapterBuilder
         .MasterTableDataAdapter(customerDataAdapter)
-        //.WithDetailTableDataAdapter(ordersAdapter)
-        //.WithDetailTableDataAdapter(customerAddressesDataAdapter)
         .Build();
-
 
     return _counter;
 }
 
-public void _timer_Elapsed(object sender, ElapsedEventArgs e)
+protected async void _timer_Elapsed(object sender, ElapsedEventArgs e)
 {
-    Console.WriteLine(DateTime.Now.ToString("{hh:mm:ss.fff}"));
-    OnExpenseAdded?.Invoke();
-    //_counter++;
-    //if (_counter >= 20)
-    //    _timer.Stop();
+    await IncrementCount();
 
-    //var customers = new Customer[1];
-    //    customers[0].Address = "None";
-
-    //allCustomers.Clear();
-    
-
-    /*
-        customerDataAdapter = new CollectionTableDataAdapter<Customer>(customers);
-        customersMasterDataAdapter = MasterAdapterBuilder
-            .MasterTableDataAdapter(customerDataAdapter)
-            //.WithDetailTableDataAdapter(ordersAdapter)
-            //.WithDetailTableDataAdapter(customerAddressesDataAdapter)
-            .Build();
-            */
-
-    //base.StateHasChanged();
+    await Invoke(() => StateHasChanged());
 }
 
-public void IncrementCount()
+protected async Task IncrementCount()
 {
     _counter++;
 
-    /*
-    var received = AsyncHelpers.RunSync<IEnumerable<BasicBackendInformation>>(() => Http.GetJsonAsync<IEnumerable<BasicBackendInformation>>("api/BasicBackendInformation/BasicBackendInformationTest"));
-
-    foreach (BasicBackendInformation singleBackendInformation in received)
+    var received = await Http.GetJsonAsync<BasicBackendInformation[]>("api/BasicBackendInformation/BasicBackendInformationTest");
+    
+    foreach (BasicBackendInformation singleBackendInformation in received.ToList())
     {
-        if(!allCustomers.Contains(singleBackendInformation))
+        if(!allCustomers.Contains(singleBackendInformation, tableEntryComparer))
         {
             allCustomers.Add(singleBackendInformation);
         }
     }
-    */
 }
 }
