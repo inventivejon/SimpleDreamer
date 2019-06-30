@@ -26,12 +26,17 @@ namespace Show_SimpleDreamer_API_Servers.Server
             // Register the Swagger services
             services.AddSwaggerDocument();
             services.AddServerSideBlazor();
+            services.AddFlexGridServerSide();
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
             });
             services.AddSingleton<StaticRepositoryCollections>();
+
+            services.TryAddScoped(typeof(ILazyDataSetLoader<>), typeof(NullLazyDataSetLoader<>));
+            services.TryAddScoped(typeof(ILazyDataSetItemManipulator<>), typeof(NullLazyDataSetItemManipulator<>));
+            services.TryAddScoped(typeof(ICreateItemHandle<,>), typeof(NullCreateItemHandler<,>));
 
             // Server Side Blazor doesn't register HttpClient by default
             if (!services.Any(x => x.ServiceType == typeof(HttpClient)))
