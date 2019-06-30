@@ -7,16 +7,11 @@
 @inject MasterTableDataAdapterBuilder<BasicBackendInformation> MasterAdapterBuilder
 @page "/masterdetailgrid"
 
-<h1>Customers</h1>
+<h2>Registered SimpleDreamer API Servers</h2>
 
-<h1>@_LastUpdatedInformation</h1>
+<GridView DataAdapter="@customersMasterDataAdapter" />
 
-<button class="btn btn-primary" @onclick="@IncrementCount">Click me</button>
-
-<input type="time" />
-
-<GridView DataAdapter="@customersMasterDataAdapter">
-</GridView>
+<h6 align="right">@_LastUpdatedInformation</h6>
 
 @code{
 string _LastUpdatedInformation;
@@ -39,7 +34,7 @@ protected override async Task OnInitAsync()
     // We're comparing based on the Id property
     tableEntryComparer = EqualityComparerFactory.Create<BasicBackendInformation>(
         a => a.IpAddress.GetHashCode(),
-        (a, b) => 0 == string.Compare((a.IpAddress + ":" + a.Port),(b.IpAddress + ":" + b.Port)));
+        (a, b) => 0 == string.Compare((a.IpAddress + ":" + a.Port), (b.IpAddress + ":" + b.Port)));
 }
 
 public async Task UpdateCompleteTable()
@@ -51,6 +46,8 @@ public async Task UpdateCompleteTable()
     customersMasterDataAdapter = MasterAdapterBuilder
         .MasterTableDataAdapter(customerDataAdapter)
         .Build();
+
+    UpdateInformationLabel();
 }
 
 protected async void _timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -60,16 +57,19 @@ protected async void _timer_Elapsed(object sender, ElapsedEventArgs e)
     await Invoke(() => StateHasChanged());
 }
 
-protected async Task IncrementCount()
+private void UpdateInformationLabel()
 {
     _LastUpdatedInformation = "Last time update: " + DateTime.Now.ToString();
+}
 
+protected async Task IncrementCount()
+{
     var received = await Http.GetJsonAsync<BasicBackendInformation[]>("api/BasicBackendInformation/BasicBackendInformationTest");
 
     /* Add new entries */
     foreach (BasicBackendInformation singleBackendInformation in received.ToList())
     {
-        if(!allCustomers.Contains(singleBackendInformation, tableEntryComparer))
+        if (!allCustomers.Contains(singleBackendInformation, tableEntryComparer))
         {
             allCustomers.Add(singleBackendInformation);
         }
@@ -78,17 +78,19 @@ protected async Task IncrementCount()
     /* Remove vanished entries */
     List<BasicBackendInformation> toDelete = new List<BasicBackendInformation>();
 
-    foreach(BasicBackendInformation singleBackendInformation in allCustomers)
+    foreach (BasicBackendInformation singleBackendInformation in allCustomers)
     {
-        if(!received.Contains(singleBackendInformation, tableEntryComparer))
+        if (!received.Contains(singleBackendInformation, tableEntryComparer))
         {
             toDelete.Add(singleBackendInformation);
         }
     }
 
-    foreach(BasicBackendInformation singleBackendInformation in toDelete)
+    foreach (BasicBackendInformation singleBackendInformation in toDelete)
     {
         allCustomers.Remove(singleBackendInformation);
     }
+
+     UpdateInformationLabel();
 }
 }
