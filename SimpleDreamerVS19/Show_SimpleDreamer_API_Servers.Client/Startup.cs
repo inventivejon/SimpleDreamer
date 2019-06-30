@@ -13,8 +13,6 @@ namespace Show_SimpleDreamer_API_Servers.Client
             services.AddFlexGrid(
                 cfg =>
                 {
-                    cfg.ApplyConfiguration(new CustomerGridConfiguration());
-                    cfg.ApplyConfiguration(new OrderGridConfiguration());
                     cfg.ApplyConfiguration(new BasicBackendInformationGridConfiguration());
                 },
                 options =>

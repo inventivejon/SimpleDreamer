@@ -14,24 +14,24 @@
 
 <button class="btn btn-primary" @onclick="@IncrementCount">Click me</button>
 
-<GridView DataAdapter="@customersMasterDataAdapter"
-          PageSize="5"
-          SaveOperationFinished="@ItemSavedOperationFinished">
+<GridView DataAdapter="@customersMasterDataAdapter">
 </GridView>
 
 @code{
 int _counter;
 Timer _timer;
 
+public event Action OnExpenseAdded;
 
 CollectionTableDataAdapter<BasicBackendInformation> customerDataAdapter;
-//CollectionTableDataAdapter<CustomerAddress> customerAddressesDataAdapter;
 MasterTableDataAdapter<BasicBackendInformation> customersMasterDataAdapter;
 List<BasicBackendInformation> allCustomers;
 
 protected override async Task OnInitAsync()
 {
     int value = await UpdateCompleteTable();
+
+    OnExpenseAdded += IncrementCount;
 
     _timer = new System.Timers.Timer(1000);
     _timer.Elapsed += new ElapsedEventHandler(_timer_Elapsed);
@@ -40,11 +40,9 @@ protected override async Task OnInitAsync()
 
 public async Task<int> UpdateCompleteTable()
 {
-    var received = await Http.GetJsonAsync<BasicBackendInformation[]>("api/BasicBackendInformation/BasicBackendInformation");
+    var received = await Http.GetJsonAsync<BasicBackendInformation[]>("api/BasicBackendInformation/BasicBackendInformationTest");
     allCustomers = received.ToList();
-    // var customersAddresses = await Http.GetJsonAsync<CustomerAddress[]>("api/Customer/CustomersAddresses");
     customerDataAdapter = new CollectionTableDataAdapter<BasicBackendInformation>(allCustomers);
-    // customerAddressesDataAdapter = new CollectionTableDataAdapter<CustomerAddress>(customersAddresses);
 
     customersMasterDataAdapter = MasterAdapterBuilder
         .MasterTableDataAdapter(customerDataAdapter)
@@ -59,7 +57,8 @@ public async Task<int> UpdateCompleteTable()
 public void _timer_Elapsed(object sender, ElapsedEventArgs e)
 {
     Console.WriteLine(DateTime.Now.ToString("{hh:mm:ss.fff}"));
-    _counter++;
+    OnExpenseAdded?.Invoke();
+    //_counter++;
     //if (_counter >= 20)
     //    _timer.Stop();
 
@@ -67,6 +66,7 @@ public void _timer_Elapsed(object sender, ElapsedEventArgs e)
     //    customers[0].Address = "None";
 
     //allCustomers.Clear();
+    
 
     /*
         customerDataAdapter = new CollectionTableDataAdapter<Customer>(customers);
@@ -77,16 +77,23 @@ public void _timer_Elapsed(object sender, ElapsedEventArgs e)
             .Build();
             */
 
-    base.StateHasChanged();
+    //base.StateHasChanged();
 }
 
 public void IncrementCount()
 {
     _counter++;
-}
 
-public void ItemSavedOperationFinished(SaveResultArgs saveResultArgs)
-{
-    Console.WriteLine($"Item saved result: {saveResultArgs.ItemSucessfullySaved}");
+    /*
+    var received = AsyncHelpers.RunSync<IEnumerable<BasicBackendInformation>>(() => Http.GetJsonAsync<IEnumerable<BasicBackendInformation>>("api/BasicBackendInformation/BasicBackendInformationTest"));
+
+    foreach (BasicBackendInformation singleBackendInformation in received)
+    {
+        if(!allCustomers.Contains(singleBackendInformation))
+        {
+            allCustomers.Add(singleBackendInformation);
+        }
+    }
+    */
 }
 }
