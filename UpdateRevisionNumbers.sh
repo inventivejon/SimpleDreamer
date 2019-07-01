@@ -10,6 +10,13 @@ versionFile=".\SimpleDreamerVS19\Show_SimpleDreamer_API_Servers.Server\StaticInf
 # and replace it with newly specified version number
 sed -i -E "s/\= \"git-[0-9a-z.]+\"/\= \"git-$(git rev-list HEAD | head -n 1)\"/" $versionFile $versionFile
 
+# file in which to update version number
+versionFile2=".\SimpleDreamerVS19\SimpleDreamer_Backend\StaticInformation\swVersion.cs"
+ 
+# find version number assignment ("= v1.5.5" for example)
+# and replace it with newly specified version number
+sed -i -E "s/\= \"git-[0-9a-z.]+\"/\= \"git-$(git rev-list HEAD | head -n 1)\"/" $versionFile2 $versionFile2
+
 #while :
 #do
     # TASK 1

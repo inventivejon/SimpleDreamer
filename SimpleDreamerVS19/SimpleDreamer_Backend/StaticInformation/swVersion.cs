@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Show_SimpleDreamer_API_Servers.Server.StaticInformation
+namespace SimpleDreamer_Backend.StaticInformation
 {
     public class swVersion
     {
@@ -14,7 +14,7 @@ namespace Show_SimpleDreamer_API_Servers.Server.StaticInformation
         public swVersion()
         {
             SoftwareVersion = "V0.1";
-            GitRevision = "git-9c3bea67c85db0bebc28e63b87bf27aef467a10d";
+            GitRevision = "git-1234";
             ApiVersion = "V0.1";
         }
     }
