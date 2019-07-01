@@ -8,7 +8,7 @@ versionFile=".\SimpleDreamerVS19\Show_SimpleDreamer_API_Servers.Server\StaticInf
  
 # find version number assignment ("= v1.5.5" for example)
 # and replace it with newly specified version number
-sed -i -E "s/\= \"git-[0-9.]+\"/\= \"git-$(git rev-list HEAD | head -n 1)\"/" $versionFile $versionFile
+sed -i -E "s/\= \"git-[0-9a-z.]+\"/\= \"git-$(git rev-list HEAD | head -n 1)\"/" $versionFile $versionFile
 
 #while :
 #do
