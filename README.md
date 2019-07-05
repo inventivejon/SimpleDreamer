@@ -20,3 +20,6 @@ https://github.com/swagger-api/swagger-editor/releases/tag/v3.6.30
 Using Postman for API Testing:
 For testing on lapop: https://www.getpostman.com/
 For final automated testing on docker hub: https://hub.docker.com/r/postman/newman
+
+# First steps
+After checkout call the bash file Install_Git_Hooks.sh to get automatic git revision update in swVersion files.
