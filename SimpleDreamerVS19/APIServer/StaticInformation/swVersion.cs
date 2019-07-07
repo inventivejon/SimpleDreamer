@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Show_SimpleDreamer_API_Servers.Server.StaticInformation
+namespace SimpleDreamer_Backend.StaticInformation
 {
     public class swVersion
     {

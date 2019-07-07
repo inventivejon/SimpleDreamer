@@ -8,21 +8,43 @@
         <h1 class="display-4">Video Stream Example</h1>
         <p>Example of normal video stream</p>
         @{
-            var source_link = "http://localhost:2914/api/streaming";
+            var source_link = "http://localhost:48445/api/streaming";
             var query_link = "?details=" + DateTime.Now.ToString("yyyy’-‘MM’-‘dd’T’HH’:’mm’:’ss.fffffffK");
             var complete_uri = source_link + query_link;
         }
         <video autoplay muted id="VideoPlayer" src=@complete_uri type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' width="1024" height="768" onended="run()" />
         <script>
-            video_count =1;
+            video_count = 1;
             videoPlayer = document.getElementById("VideoPlayer");
 
             function run() {
                 video_count++;
                 if (video_count == 16) video_count = 1;
-                var nextVideo = "http://localhost:2914/api/streaming?details=" + video_count + ".mp4";
+                var nextVideo = "http://localhost:48445/api/streaming?details=" + video_count + ".mp4";
                 videoPlayer.src = nextVideo;
                 videoPlayer.play();
             };
         </script>
+        <canvas id="signalRImgs" width="300" height="300" style="border: solid 1px black"></canvas>
+        <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+        <script src="~/js/imgPlayer.js"></script>
+
+        @*
+        <script>
+            function onStreamed(imageUrl, imageWidth, imageHeight) {
+                //for StreamingMode="Event", draw an image on an existing canvas
+                //the onload event is for cross-browser compatibility
+                //in this example, we are using the canvas width and height
+                var canvas = document.getElementById('received');
+                var ctx = canvas.getContext('2d');
+                var img = new Image();
+                img.src = imageUrl;
+                img.onload = function () {
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                }
+            }
+        </script>
+        <web:VideoStreaming runat="server" ID="VideoStreamer" ClientIDMode="Static" Width="1024px" Height="768px" Interval="100" Source="True" ScalingMode="TargetSize" StreamingMode="Target" TargetClientID="received" OnStreamed="onStreamed" Style="border: solid 1px black" />
+        <canvas id="received" width="300" height="300" style="border: solid 1px black"></canvas>
+        *@
     </div>

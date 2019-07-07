@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleDreamer_Backend", "SimpleDreamer_Backend\SimpleDreamer_Backend.csproj", "{9B7E2DC3-5525-4DF0-BA56-49EB971AE426}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Show_SimpleDreamer_API_Servers.Server", "Show_SimpleDreamer_API_Servers.Server\Show_SimpleDreamer_API_Servers.Server.csproj", "{457C6C64-5718-47B2-9372-C97DF4719A95}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Show_SimpleDreamer_API_Servers.Client", "Show_SimpleDreamer_API_Servers.Client\Show_SimpleDreamer_API_Servers.Client.csproj", "{5FCF638F-4393-4254-A9E9-94ADB6D594CF}"
@@ -13,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Show_SimpleDreamer_API_Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.FlexGrid", "Blazor.FlexGrid\Blazor.FlexGrid.csproj", "{5F07D01F-0DE5-43E5-BF72-F888C14524E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWebsite", "TestWebsite\TestWebsite.csproj", "{A5A812A6-F673-4E3E-AFA7-AB1B592AD3A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestWebsite", "TestWebsite\TestWebsite.csproj", "{A5A812A6-F673-4E3E-AFA7-AB1B592AD3A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIServer", "APIServer\APIServer.csproj", "{50FD47AE-8031-46F0-AF86-126C94495A25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9B7E2DC3-5525-4DF0-BA56-49EB971AE426}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B7E2DC3-5525-4DF0-BA56-49EB971AE426}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B7E2DC3-5525-4DF0-BA56-49EB971AE426}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B7E2DC3-5525-4DF0-BA56-49EB971AE426}.Release|Any CPU.Build.0 = Release|Any CPU
 		{457C6C64-5718-47B2-9372-C97DF4719A95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{457C6C64-5718-47B2-9372-C97DF4719A95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{457C6C64-5718-47B2-9372-C97DF4719A95}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{A5A812A6-F673-4E3E-AFA7-AB1B592AD3A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5A812A6-F673-4E3E-AFA7-AB1B592AD3A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5A812A6-F673-4E3E-AFA7-AB1B592AD3A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50FD47AE-8031-46F0-AF86-126C94495A25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50FD47AE-8031-46F0-AF86-126C94495A25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50FD47AE-8031-46F0-AF86-126C94495A25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50FD47AE-8031-46F0-AF86-126C94495A25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
