@@ -14,7 +14,7 @@ namespace Show_SimpleDreamer_API_Servers.Server.StaticInformation
         public swVersion()
         {
             SoftwareVersion = "V0.1";
-            GitRevision = "git-c390e95f0038e93b81149bc810b117c5e6a1ba95";
+            GitRevision = "git-20793e141a966cdea1435705b9b09323aa791048";
             ApiVersion = "V0.1";
         }
     }

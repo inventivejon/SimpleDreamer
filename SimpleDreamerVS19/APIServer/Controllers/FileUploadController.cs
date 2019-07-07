@@ -37,7 +37,7 @@ namespace SimpleDreamer_Backend.Controllers
             {
                 foreach (var file in fileDescriptionShort.File)
                 {
-                    if (file.Length > 0)
+                    if (file.Length > 0 && file.ContentType.Contains("image"))
                     {
                         using (var memoryStream = new MemoryStream())
                         {

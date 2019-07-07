@@ -8,11 +8,10 @@
 
         <a href="/FileClient/Index" target="_blank">Upload Images</a>
 
-        <div class="row" *ngIf="images.length > 0">
-            <img *ngFor="let image of images;"
-                 width="150" style="margin-right:5px"
+        <div class="row">
+            <img width="150" style="margin-right:5px"
                  id="signalRImgs"
-                 [src]="image.imageHeaders + image.imageBinary">
+                 [src]="">
         </div>
 
         <script src="~/lib/signalr/dist/browser/signalr.js"></script>
