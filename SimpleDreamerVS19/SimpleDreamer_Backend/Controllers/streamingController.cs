@@ -22,14 +22,11 @@ namespace SimpleDreamer_Backend.Controllers
         [HttpGet]
         public IActionResult Get(CancellationToken CT)
         {
-            string SourceVideoURL = "file_example_MP4_640_3MG.mp4";
-
-            CT.ThrowIfCancellationRequested();
-
             try
             {
-                var path = Path.Combine("", SourceVideoURL);
-                FileStreamResult response = File(System.IO.File.OpenRead(path), "video/mp4");
+                CT.ThrowIfCancellationRequested();
+
+                FileStreamResult response = File(Program._simpleDreamerContentProvider.GetSource(), "video/mp4", true);
 
                 //Stream back to target
                 return response;
@@ -38,7 +35,7 @@ namespace SimpleDreamer_Backend.Controllers
             {
                 //Won't trigger when stream is canceled by user, Like close browser.
                 //TODO: Cancel streams
-                return null;
+                return NotFound("Failed because:" + ex.Message + "->" + ex.StackTrace);
             }
 
         }
