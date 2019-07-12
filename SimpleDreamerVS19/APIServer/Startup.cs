@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
@@ -65,6 +66,11 @@ namespace APIServer
                     });
             });
 
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 600000000;
+            });
+
             services.AddSignalR()
               .AddMessagePackProtocol();
             services.Configure<CookiePolicyOptions>(options =>
@@ -102,6 +108,7 @@ namespace APIServer
             app.UseSignalR(routes =>
             {
                 routes.MapHub<ImagesMessageHub>("/zub");
+                routes.MapHub<VideoStreamHub>("/streamingHub");
             });
 
             // Register the Swagger generator and the Swagger UI middlewares

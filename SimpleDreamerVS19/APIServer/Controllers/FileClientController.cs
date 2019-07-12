@@ -8,6 +8,7 @@ namespace APIServer.Controllers
 {
     public class FileClientController : Controller
     {
+        [DisableRequestSizeLimit]
         public ActionResult Index()
         {
             ViewBag.Title = "Index Page";

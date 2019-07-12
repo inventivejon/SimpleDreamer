@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using APIServer.StaticInformation;
+using Microsoft.AspNetCore.SignalR;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,6 +23,26 @@ namespace SimpleDreamer_Backend.Behvaior
             return Clients.All.SendAsync("ImageMessage", file);
         }
     }
+
+    public class VideoMessage
+    {
+        public string Url { get; set; }
+        public string ImageHeaders { get; set; }
+    }
+
+    public class VideoContent
+    {
+        public byte[] VideoBinary { get; set; }
+    }
+
+    public class VideoStreamHub : Hub
+    {
+        public Task VideoMessage(VideoMessage file)
+        {
+            return Clients.All.SendAsync("VideoMessage", file);
+        }
+    }
+
     public class SimpleDreamerContentProvider
     {
         const string videoBasePath = "./assets/Videos/";
@@ -28,13 +50,62 @@ namespace SimpleDreamer_Backend.Behvaior
         int CurrentVideo = 0;
         DateTime nextSourceTimePoint;
 
+        private ConcurrentDictionary<Guid, VideoContent> _AllVideoSnippets;
+        private ConcurrentDictionary<Guid, VideoContent> AllVideoSnippets
+        {
+            get
+            {
+                if(null == _AllVideoSnippets)
+                {
+                    _AllVideoSnippets = new ConcurrentDictionary<Guid, VideoContent>();
+                }
+
+                return _AllVideoSnippets;
+            }
+        }
+
+        public List<Guid> GetAllSnippetGuids()
+        {
+            return AllVideoSnippets.Keys.ToList();
+        }
+
         public SimpleDreamerContentProvider()
         {
             nextSourceTimePoint = DateTime.Now;
         }
 
-        public Stream GetSource()
+        public Guid AddVideoData(VideoContent newVideoSnippet)
         {
+            Guid myNewGuid = Guid.NewGuid();
+
+            if (TryRetryFailClass.TryRetryFail(3, () => AllVideoSnippets.TryAdd(myNewGuid, newVideoSnippet)))
+            {
+                return myNewGuid;
+            }
+            else
+            {
+                return Guid.NewGuid();
+            }
+        }
+
+        public static byte[] ReadFully(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
+
+        public Stream GetSource(Guid id)
+        {
+
+#if COMMENT
             if (nextSourceTimePoint < DateTime.Now)
             {
                 if (CurrentVideo >= FileList.Length)
@@ -46,6 +117,12 @@ namespace SimpleDreamer_Backend.Behvaior
             }
 
             return System.IO.File.OpenRead(videoBasePath + FileList[CurrentVideo++]);
+#endif
+            //return AllVideoSnippets[id].VideoBinary;
+            //MemoryStream ms = new MemoryStream();
+            //var fromFile = System.IO.File.OpenRead(videoBasePath + FileList[0]);
+            //fromFile.CopyTo(ms);
+            return System.IO.File.OpenRead(videoBasePath + FileList[0]);//fromFile;//ms.ToArray();
         }
     }
 }

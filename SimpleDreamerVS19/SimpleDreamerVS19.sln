@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.FlexGrid", "Blazor.F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestWebsite", "TestWebsite\TestWebsite.csproj", "{A5A812A6-F673-4E3E-AFA7-AB1B592AD3A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIServer", "APIServer\APIServer.csproj", "{50FD47AE-8031-46F0-AF86-126C94495A25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIServer", "APIServer\APIServer.csproj", "{50FD47AE-8031-46F0-AF86-126C94495A25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -21,13 +21,20 @@ namespace SimpleDreamer_Backend.Controllers
         private static HttpClient _client { get; } = new HttpClient();
 
         [HttpGet]
-        public IActionResult Get(CancellationToken CT)
+        public IActionResult Get()
+        {
+            return Ok(Program._simpleDreamerContentProvider.GetAllSnippetGuids());
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetId(Guid id, CancellationToken CT)
         {
             try
             {
+                //http://localhost:48445/api/streaming/2a2154f7-4b87-43d6-bcae-c15b88f263b2
                 CT.ThrowIfCancellationRequested();
 
-                FileStreamResult response = File(Program._simpleDreamerContentProvider.GetSource(), "video/mp4", true);
+                var response = File(Program._simpleDreamerContentProvider.GetSource(id), "video/mp4", false);
 
                 //Stream back to target
                 return response;
