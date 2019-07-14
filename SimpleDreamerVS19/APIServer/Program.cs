@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SimpleDreamer_Backend.Behvaior;
+using SimpleDreamer_Backend.Behavior;
 
 namespace APIServer
 {

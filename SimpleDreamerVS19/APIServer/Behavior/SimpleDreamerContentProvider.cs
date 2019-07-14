@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SimpleDreamer_Backend.Behvaior
+namespace SimpleDreamer_Backend.Behavior
 {
     public class ImageMessage
     {

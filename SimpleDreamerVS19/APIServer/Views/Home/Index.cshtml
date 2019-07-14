@@ -17,7 +17,13 @@
         <link href="//vjs.zencdn.net/7.3.0/video-js.min.css" rel="stylesheet">
         <script src="//vjs.zencdn.net/7.3.0/video.min.js"></script>
 
-        <video id="my-player" autoplay muted>
+        <video id="my-player"
+               class="video-js"
+               autoplay
+               muted
+               preload="auto"
+               poster="//vjs.zencdn.net/v/oceans.png"
+               data-setup='{}'>
             <source id="src-player" src="http://localhost:48445/api/streaming/2a2154f7-4b87-43d6-bcae-c15b88f263b2" type="video/mp4"></source>
         </video>
 
@@ -25,7 +31,6 @@
         <script src="~/js/imgPlayer.js"></script>
         <script src="~/js/ImageMessage.js"></script>
         <script src="~/js/VideoMessage.js"></script>
-        <script src="~/js/VideoStreamAppender2.js"></script>
-
+        
 
     </div>

@@ -7,7 +7,7 @@ using APIServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using SimpleDreamer_Backend.Behvaior;
+using SimpleDreamer_Backend.Behavior;
 
 namespace SimpleDreamer_Backend.Controllers
 {
