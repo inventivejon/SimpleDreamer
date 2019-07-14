@@ -9,42 +9,76 @@
 
 <ul id="messages"></ul>
 
+<div id="content"> </div>
+<!-- appending video here -->
+<hr />
+<!-- written in html -->
+
 <script language="javascript" type="text/javascript">
-        var uri = "ws://" + window.location.host + "/streamingSocket";
-        function connect() {
-            socket = new WebSocket(uri);
-            socket.onopen = function(event) {
-                console.log("opened connection to " + uri);
-            };
-            socket.onclose = function(event) {
-                console.log("closed connection from " + uri);
-            };
-            socket.onmessage = function(event) {
+    var uri = "ws://" + window.location.host + "/streamingSocket";
+    function connect() {
+        socket = new WebSocket(uri);
+        socket.onopen = function (event) {
+            console.log("opened connection to " + uri);
+        };
+        socket.onclose = function (event) {
+            console.log("closed connection from " + uri);
+        };
+        socket.onmessage = function (event) {
+            if (event.data instanceof Blob) {
+                var reader = new FileReader();
+                reader.readAsDataURL(event.data);
+                reader.onloadend = function () {
+                    base64data = reader.result;
+
+                    var obj,
+                        source;
+
+                    obj = document.createElement('video');
+                    $(obj).attr('id', 'example_video_test');
+                    $(obj).attr('class', 'video-js vjs-default-skin');
+                    $(obj).attr('width', '640');
+                    $(obj).attr('data-height', '264');
+                    $(obj).attr('controls', ' ');
+                    $(obj).attr('poster', '//vjs.zencdn.net/v/oceans.png');
+                    $(obj).attr('preload', 'auto');
+                    $(obj).attr('data-setup', '{}');
+
+                    source = document.createElement('source');
+                    $(source).attr('type', 'video/mp4');
+                    $(source).attr('src', base64data);
+
+                    $("#content").append(obj);
+                    $(obj).append(source);
+                }
+            }
+            else {
                 appendItem(list, event.data);
                 console.log(event.data);
-            };
-            socket.onerror = function(event) {
-                console.log("error: " + event.data);
-            };
-        }
-        connect();
-        var list = document.getElementById("messages");
-        var button = document.getElementById("sendButton");
-        button.addEventListener("click", function() {
+            }
+        };
+        socket.onerror = function (event) {
+            console.log("error: " + event.data);
+        };
+    }
+    connect();
+    var list = document.getElementById("messages");
+    var button = document.getElementById("sendButton");
+    button.addEventListener("click", function () {
 
-            var input = document.getElementById("textInput");
-            sendMessage(input.value);
+        var input = document.getElementById("textInput");
+        sendMessage(input.value);
 
-            input.value = "";
-        });
-        function sendMessage(message) {
-            console.log("Sending: " + message);
-            socket.send(message);
-        }
-        function appendItem(list, message) {
-            var item = document.createElement("li");
-            item.appendChild(document.createTextNode(message));
-            list.appendChild(item);
-        }
+        input.value = "";
+    });
+    function sendMessage(message) {
+        console.log("Sending: " + message);
+        socket.send(message);
+    }
+    function appendItem(list, message) {
+        var item = document.createElement("li");
+        item.appendChild(document.createTextNode(message));
+        list.appendChild(item);
+    }
 </script>
 

@@ -1,4 +1,7 @@
-﻿using APIServer.Behavior;
+﻿using APIServer;
+using APIServer.Behavior;
+using SimpleDreamer_Backend.Behavior;
+using System;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +27,9 @@ namespace ChatApplication
             var socketId = WebSocketConnectionManager.GetId(socket);
             var message = $"{socketId} said: {Encoding.UTF8.GetString(buffer, 0, result.Count)}";
 
-            await SendMessageToAllAsync(message);
+            //await SendMessageToAllAsync(message);
+
+            await SendMessageToAllAsync(SimpleDreamerContentProvider.ReadFully(Program._simpleDreamerContentProvider.GetSource(Guid.Empty)));
         }
     }
 }

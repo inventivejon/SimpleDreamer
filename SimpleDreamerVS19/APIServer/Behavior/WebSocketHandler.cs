@@ -38,12 +38,34 @@ namespace APIServer.Behavior
                                    cancellationToken: CancellationToken.None);
         }
 
+        public async Task SendMessageAsync(WebSocket socket, byte[] message)
+        {
+            if (socket.State != WebSocketState.Open)
+                return;
+
+            await socket.SendAsync(buffer: new ArraySegment<byte>(array: message,
+                                                                  offset: 0,
+                                                                  count: message.Length),
+                                   messageType: WebSocketMessageType.Binary,
+                                   endOfMessage: true,
+                                   cancellationToken: CancellationToken.None);
+        }
+
         public async Task SendMessageAsync(string socketId, string message)
         {
             await SendMessageAsync(WebSocketConnectionManager.GetSocketById(socketId), message);
         }
 
         public async Task SendMessageToAllAsync(string message)
+        {
+            foreach (var pair in WebSocketConnectionManager.GetAll())
+            {
+                if (pair.Value.State == WebSocketState.Open)
+                    await SendMessageAsync(pair.Value, message);
+            }
+        }
+
+        public async Task SendMessageToAllAsync(byte[] message)
         {
             foreach (var pair in WebSocketConnectionManager.GetAll())
             {
